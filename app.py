@@ -45,6 +45,14 @@ def film(id):
 def films():
     return render_template('films.html')
 
+#Страница с таблицей фильмов
+@app.route("/film_table")
+def tablica():
+    res = cur.execute("select * from Movies")
+    films = res.fetchall()
+    print(films)
+    return render_template('film_table.html', films = films)
+
 
 # Страница с формой для добавления нового фильма
 @app.route("/film_form", methods=['GET', 'POST'])

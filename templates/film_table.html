@@ -1,0 +1,43 @@
+
+<html>
+<head>
+<title>Страница</title>
+
+</head>   
+
+<body>    
+    <!-- Ссылки на главную страницу и страницу фильмов -->
+    <a href="http://127.0.0.1:5000">Главная</a>
+    <a href="http://127.0.0.1:5000/film_form">Добавить фильм</a>
+    <a href="http://127.0.0.1:5000/films">Фильмы</a>
+    <a href="http://127.0.0.1:5000/film_table">Фильмы(таблица БД)</a>
+    <!-- Ссылка на страницу конкретного фильма, в данном случае фильм с id 3 -->
+    <a href="http://127.0.0.1:5000/film/3">Фильм 3 (служебная)</a>
+    
+    
+    <table border="1">
+       <p></p>
+        <tr>
+         
+         <th>Name</th>
+         <th>Year</th>
+         <th>Rating</th>
+         <th>Gente</th>
+         <th>Prosmotr</th>
+        </tr>
+        {% for i in films %}
+        <tr>
+            <td>{{ i[1] }}</td>
+            <td>{{ i[2] }}</td>
+            <td>{{ i[3] }}</td>
+            <td>{{ i[4] }}</td>
+            <td>{{ i[5] }}</td>
+           
+        </tr>
+        {% endfor %}
+        
+       
+       </table>
+
+</body>
+</html>
