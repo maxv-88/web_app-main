@@ -5,6 +5,8 @@ from wtforms import *
 from wtforms.validators import DataRequired
 
 class MyForm(FlaskForm):
+    class Meta:
+        csrf = False
     name = StringField('name', validators=[DataRequired()])
     rating = FloatField('rating', validators=[DataRequired()])
     year = IntegerField('year', validators=[DataRequired()])
@@ -59,7 +61,18 @@ def tablica():
 def film_form():
     form = MyForm()
     if form.validate_on_submit():
-        return 'Форма отправлена на сервер'
+        name = form.data['name']
+        rating = form.data['rating']
+        year = form.data['year']
+        genre = form.data['genre']        
+        print(name)
+        # Формирование кортежа с данными о фильме
+        film_data = (name, genre, year, rating)
+        # Выполнение SQL запроса для добавления фильма в базу данных
+        cur.execute('INSERT INTO Movies (name, genre, year, rating) VALUES (?, ?, ?, ?)', film_data)
+        # Сохранение изменений в базе данных
+        con.commit()
+        return 'Форма отправлена на сервер'    
     return render_template('form.html', form=form)
 
 # Пример из документации https://pythonru.com/uroki/11-rabota-s-formami-vo-flask
@@ -106,4 +119,4 @@ def film_add():
 # Запуск приложения, если оно выполняется как главный модуль
 if __name__ == '__main__':
     app.config["WTF_CSRF_ENABLED"] = False  # Отключаем проверку CSRF для WTForms
-    app.run(debug=True)
+    app.run()
